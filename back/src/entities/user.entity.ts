@@ -26,9 +26,9 @@ export class User {
   @Column({ type: 'date' })
   birth_date: Date;
 
-  @Column({ type: 'date', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'date', default: () => 'CURRENT_TIMESTAMP', nullable: true })
   create_date: Date;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ default: true, nullable: true })
+  is_active: boolean;
 }

@@ -5,8 +5,12 @@ import {
   FormBuilder,
   Validators,
   FormGroup,
+  FormControl,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { POST } from '../../../constants';
+
+import ContextService from '../../context/context.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,36 +20,29 @@ import {
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-  signUpObj: SignUpModel = {
-    nickname: '',
-    name: '',
-    lastname: '',
-    email: '',
-    birthday: '',
-    password: '',
-    confirmPassword: '',
-  };
-  constructor(private formBuilder: FormBuilder) {
-    /*this.signUpForm= this.formBuilder.group({
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-  },{validator:this.passwordMatchValidator});*/
-  }
+  form = new FormGroup({
+    nickname: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    last_name: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    birth_date: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
+  });
 
-  passwordMatchValidator(formGroup: FormGroup) {
-    const passwordControl = formGroup.get('password');
-    const confirmPasswordControl = formGroup.get('confirmPassword');
+  constructor(private context: ContextService) {}
 
-    if (
+  passwordMatchValidator(password: string, confirmPassword: string) {
+    const passwordControl = password;
+    const confirmPasswordControl = confirmPassword;
+
+    return (
       passwordControl &&
       confirmPasswordControl &&
-      passwordControl.value !== confirmPasswordControl.value
-    ) {
-      confirmPasswordControl.setErrors({ passwordMismatch: true });
-    } else {
-      //confirmPasswordControl.setErrors(null);
-    }
+      passwordControl === confirmPasswordControl
+    );
   }
+
   registerData = [
     {
       message: 'Nombre de usuario',
@@ -56,7 +53,7 @@ export class SignUpComponent {
       type: 'text',
       id: 'nickname-field',
       pattern: '',
-      form: this.signUpObj.nickname,
+      form: 'nickname',
     },
     {
       message: 'Nombre',
@@ -67,7 +64,7 @@ export class SignUpComponent {
       type: 'text',
       id: 'name-field',
       pattern: '^[A-Za-z]+',
-      form: this.signUpObj.name,
+      form: 'name',
     },
     {
       message: 'Apellido',
@@ -77,7 +74,7 @@ export class SignUpComponent {
       name: 'lastname',
       type: 'text',
       pattern: '^[A-Za-z]+',
-      form: this.signUpObj.lastname,
+      form: 'last_name',
     },
     {
       message: 'Fecha de nacimiento',
@@ -87,7 +84,7 @@ export class SignUpComponent {
       name: 'birthday',
       type: 'date',
       pattern: '',
-      form: this.signUpObj.birthday,
+      form: 'birth_date',
     },
     {
       message: 'Email',
@@ -97,7 +94,7 @@ export class SignUpComponent {
       name: 'email',
       type: 'email',
       pattern: '',
-      form: this.signUpObj.email,
+      form: 'email',
     },
     {
       message: 'Contraseña',
@@ -108,7 +105,7 @@ export class SignUpComponent {
       type: 'password',
       id: 'password-field',
       pattern: '',
-      form: this.signUpObj.password,
+      form: 'password',
     },
     {
       message: 'Confirmar contraseña',
@@ -119,20 +116,57 @@ export class SignUpComponent {
       type: 'password',
       id: 'confirm-password-field',
       pattern: '',
-      form: this.signUpObj.confirmPassword,
+      form: 'confirmPassword',
     },
   ];
   onRegister() {
-    const localUser = localStorage.getItem('angularUsers');
-    if (localUser !== null) {
-      const users = JSON.parse(localUser);
-      users.push(this.signUpObj);
-      localStorage.setItem('angularUsers', JSON.stringify(users));
-    } else {
-      const users = [];
-      users.push(this.signUpObj);
-      localStorage.setItem('angularUsers', JSON.stringify(users));
+    const {
+      nickname,
+      name,
+      last_name,
+      email,
+      birth_date,
+      password,
+      confirmPassword,
+    } = this.form.value;
+
+    if (!this.form.valid) {
+      console.error('Form is invalid');
+      return;
     }
+
+    if (!this.passwordMatchValidator(password!, confirmPassword!)) {
+      console.error('Passwords do not match');
+      return;
+    }
+
+    // const ala = fetch('http://localhost:3000/user', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     nickname,
+    //     name,
+    //     last_name,
+    //     email,
+    //     birth_date,
+    //     password,
+    //   }),
+    // }).then((res) => res.json());
+
+    // console.log(ala)
+
+    const user = POST('/user/create', {
+      nickname,
+      name,
+      last_name,
+      email,
+      birth_date,
+      password,
+    });
+
+    console.log(user);
   }
 }
 

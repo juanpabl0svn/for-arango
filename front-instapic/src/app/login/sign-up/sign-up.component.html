@@ -1,5 +1,5 @@
-<div  class="form">
-  <form id="register-form" class="form-container">
+<div class="form">
+  <form id="register-form" class="form-container" [formGroup]="form">
     <div class="logo-container">InstaPics</div>
     <div class="title-container">
       <p class="title">Crea tu cuenta!</p>
@@ -19,7 +19,7 @@
           [type]="item.type"
           class="input-field"
           [id]="item.id"
-          [(ngModel)]="item.form"
+          [formControlName]="item.form"
           required
         />
       </div>

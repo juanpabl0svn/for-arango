@@ -19,6 +19,7 @@
         class="input-field"
         [id]="item.id"
         required
+        [(ngModel)]="userData[item.name]"
       />
     </div>
     <button type="submit" class="sign-in-btn" (click)="onSignIn()">

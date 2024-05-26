@@ -11,7 +11,6 @@ import { Repository, ILike } from 'typeorm';
 
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
 
-
 @Injectable()
 export class UserService {
   constructor(
@@ -21,24 +20,20 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async auth(nickname: string, password: string) {
+  async auth(email: string, password: string) {
     const user = await this.userRepository.findOne({
-      where: { nickname },
+      where: { email },
     });
 
-    if (!this.bcryptService.compare(password, user.password)) {
-      throw new Error('Invalid password');
-    }
+    return user;
 
-
-
-
-
-
+    // if (!this.bcryptService.compare(password, user.password)) {
+    //   throw new Error('Invalid password');
+    // }
   }
 
   create(createUserDto: CreateUserDto) {
-    return this.create(createUserDto);
+    return this.userRepository.create(createUserDto);
   }
 
   findAll() {
