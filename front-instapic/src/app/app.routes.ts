@@ -7,9 +7,9 @@ import { HomePageComponent } from './home/pages/home-page/home-page.component';
 import { AccountPageComponent } from './account/account-page/account-page.component';
 
 export const routes: Routes = [
-    {path:'', component:SignInComponent},
-    {path:'sign-up', component:SignUpComponent},
-    {path:'home', component:HomePageComponent},
-    {path:'account', component:AccountPageComponent},
-    {path:'**', redirectTo:'', pathMatch:'full'},
+  { path: '', component: SignInComponent },
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'home', component: HomePageComponent },
+  { path: 'account', component: AccountPageComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

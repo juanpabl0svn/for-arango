@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { POST } from '../../../constants';
 import ContextService from '../../context/context.service';
@@ -13,7 +13,7 @@ import ContextService from '../../context/context.service';
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
-  constructor(public context: ContextService) {}
+  constructor(public context: ContextService, private route: Router) {}
 
   userData: any = {
     email: '',
@@ -50,5 +50,7 @@ export class SignInComponent {
     });
 
     this.context.user = user;
+
+    this.route.navigate(['/home']);
   }
 }
