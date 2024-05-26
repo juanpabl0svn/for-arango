@@ -1,0 +1,39 @@
+<div  class="form">
+  <form id="register-form" class="form-container">
+    <div class="logo-container">InstaPics</div>
+    <div class="title-container">
+      <p class="title">Crea tu cuenta!</p>
+      <span class="subtitle"
+        >Estás a pocos pasos de formar parte de nuestra comunidad!</span
+      >
+    </div>
+
+    <div class="grid-container">
+      <div class="input-container" *ngFor="let item of registerData">
+        <label class="input-label" [for]="item.id">{{ item.message }}</label>
+        <img [src]="item.svg" />
+        <input
+          [placeholder]="item.placeholder"
+          [title]="item.title"
+          [name]="item.name"
+          [type]="item.type"
+          class="input-field"
+          [id]="item.id"
+          [(ngModel)]="item.form"
+          required
+        />
+      </div>
+    </div>
+
+    <button
+      title="Sign In"
+      type="submit"
+      class="sign-in-btn"
+      (click)="onRegister()"
+    >
+      <span>Registrate</span>
+    </button>
+
+    <p class="note">Terminos de uso &amp; Condiciones</p>
+  </form>
+</div>

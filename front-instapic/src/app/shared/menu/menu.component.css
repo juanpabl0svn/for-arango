@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+
+
+#title-menu2 {
+    visibility: hidden;
+}
+
+#title-menu,
+#title-menu2 {
+    z-index: 1;
+    position: fixed;
+    translate: 25% 10%;
+    font-family: "Permanent Marker";
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.menu_items {
+    position: fixed;
+    top: 50%;
+    translate: -5% -50%;
+}
+
+.item {
+    margin-top: 0.3rem;
+}
+
+.cssbuttons-io {
+    text-decoration: none;
+    align-items: center;
+    position: relative;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1px;
+    height: 2.5rem;
+    width: 10rem;
+    letter-spacing: 0.05em;
+    border-radius: 4em;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    color: rgb(240, 240, 243);
+    overflow: hidden;
+    display: flex;
+}
+
+.cssbuttons-io img {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 4em;
+    margin-left: 8em;
+}
+
+.cssbuttons-io span {
+    font-weight: bold;
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+    display: flex;
+    align-content: end;
+    align-items: center;
+    padding: 0em 0em 0em 0em;
+}
+
+.cssbuttons-io p {
+    margin-left: 10em;
+}
+
+.cssbuttons-io::after,
+.cssbuttons-io::before {
+    top: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.cssbuttons-io::before {
+    place-content: center;
+    content: "";
+    transform: skew(30deg);
+    background: #000;
+    width: 122%;
+    left: -10.5%;
+
+    transition: transform 0.3s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.cssbuttons-io:hover::before {
+    transform: translate3d(100%, 0, 0);
+}
+
+.cssbuttons-io:active {
+    transform: scale(0.9);
+}
+
+@media only screen and (max-width: 60rem) {
+
+    #title-menu {
+        visibility: hidden;
+    }
+
+    #title-menu2 {
+        visibility: visible;
+    }
+
+    #title-menu2 {
+        translate: 0em 0;
+
+    }
+
+    .cssbuttons-io {
+        width: 60%;
+    }
+
+    .cssbuttons-io p {
+
+        visibility: hidden
+    }
+
+    .cssbuttons-io img {
+        translate: 70% 0%;
+    }
+
+}

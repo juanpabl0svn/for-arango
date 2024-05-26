@@ -1,0 +1,64 @@
+.user-pics {
+    /* background-color: red; */
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-content: center;
+    align-content: center;
+    gap: 0.2em;
+
+    &>.pic-container {
+        text-align: center;
+        width: 15em;
+        height: 17em;
+        /*background-color: blue;*/
+    }
+
+}
+
+.pic {
+    background-size: cover;
+    height: 82%;
+    width: 90%;
+}
+.pic:hover {
+    filter: brightness(70%);
+  
+}
+
+.pic-options {
+    translate: 0em -0.5em;
+
+    position: center;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+
+    &>.pic-option {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        fill: black;
+        color: black;
+    }
+}
+
+.pic-option:active {
+    transform: scale(0.9);
+}
+
+.pic-option img {
+    width: 80%;
+    height: 80%;
+}
+
+@media only screen and (max-width: 60rem) {
+    .user-pics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

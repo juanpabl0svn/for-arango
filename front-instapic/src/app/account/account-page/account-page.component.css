@@ -1,0 +1,48 @@
+.container {
+    margin: 0;
+    background: rgb(201, 198, 198);
+    display: flex;
+    height: 100%;
+}
+
+#menu {
+
+    width: 20%;
+    position: relative;
+}
+
+.account-container {
+    width: 80%;
+    background-color: rgb(201, 198, 198);
+    display: grid;
+    place-content: center;
+}
+
+#profile-pic {
+    margin-top: 1em;
+    height: 7em;
+    width: 7em;
+    border-radius: 50%;
+
+}
+
+#info {
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+.info-p {
+    height: 5vh;
+    transform: translate(50%);
+    margin-left: 15px;
+    padding: 8px;
+    background: #262626;
+    border-radius: 5px;
+
+    &>.info_account {
+        font-weight: bold;
+    }
+}

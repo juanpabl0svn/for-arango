@@ -1,0 +1,43 @@
+<div class="form">
+  <form id="login_form" class="form-container">
+    <div class="logo-container">InstaPics</div>
+    <div class="title-container">
+      <p class="title">Inicia sesión con tu cuenta</p>
+      <span class="subtitle"
+        >Disfruta de poder compartir tus mejores momentos y guardalos para
+        siempre</span
+      >
+    </div>
+    <div class="input-container" *ngFor="let item of loginData">
+      <label class="input-label" [for]="item.id">{{ item.title }}</label>
+      <img [src]="item.svg" />
+      <input
+        [placeholder]="item.placeholder"
+        [title]="item.title"
+        [name]="item.name"
+        [type]="item.type"
+        class="input-field"
+        [id]="item.id"
+        required
+      />
+    </div>
+    <button type="submit" class="sign-in-btn" (click)="onSignIn()">
+      <span>Iniciar sesión</span>
+    </button>
+
+    <div class="separator">
+      <hr class="line" />
+      <span>O</span>
+      <hr class="line" />
+    </div>
+    <a
+      routerLink="sign-up"
+      routerLinkActive="router-link-active"
+      type="submit"
+      class="sign-up-btn"
+    >
+      Regístrate
+    </a>
+    <p class="note">Terminos de uso &amp; Condiciones</p>
+  </form>
+</div>

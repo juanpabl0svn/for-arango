@@ -1,0 +1,14 @@
+<div>
+  <h2 id="title-menu">InstaPics</h2>
+  <h2 id="title-menu2">IPics</h2>
+  <div class="menu_items">
+    <div class="item" *ngFor="let item of menuData">
+      <a class="cssbuttons-io" [routerLink]=item.link>
+        <span>
+          <img [src]=item.svg />
+          <p>{{item.title}}</p>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
