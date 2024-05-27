@@ -51,4 +51,8 @@ export class UserService {
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
+
+  validate(id: number) {
+    return this.userRepository.findOne({ where: { id } });
+  }
 }
