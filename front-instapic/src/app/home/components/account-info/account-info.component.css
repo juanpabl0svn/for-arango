@@ -1,0 +1,10 @@
+.user-image {
+  width: 40px;
+  mix-blend-mode: multiply;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
