@@ -7,43 +7,61 @@ import { Menu } from '../../interfaces/menu.interface';
   selector: 'menu',
   standalone: true,
   templateUrl: './menu.component.html',
-  imports:[CommonModule,RouterLink],
-  styleUrl: './menu.component.css'
+  imports: [CommonModule, RouterLink],
+  styleUrl: './menu.component.css',
 })
 export class MenuComponent {
-  menuData:Menu[]=
-  [{
-    title:"Inicio",
-    svg:"/../assets/home.svg",
-    link:"/home"
-  },{
-    title:"Búsqueda",
-    svg:"/../assets/search.svg",
-    link:"/home"
-  },{
-    title:"Explorar",
-    svg:"/../assets/explore.svg",
-    link:"/home"
-  },{
-    title:"Reels",
-    svg:"/../assets/reel.svg",
-    link:"/home"
-  },{
-    title:"Mensajes",
-    svg:"/../assets/mail.svg",
-    link:"/home"
-  },{
-    title:"Notificaciones",
-    svg:"/../assets/notification.svg",
-    link:"/home"
-  },{
-    title:"Crear",
-    svg:"/../assets/create.svg",
-    link:"/home"
-  },{
-    title:"Cuenta",
-    svg:"/../assets/account.svg",
-    link:"/account"
-  }]
+  menuData: Menu[] = [
+    {
+      title: 'Inicio',
+      svg: '/assets/home.svg',
+      link: '/home',
+    },
+    {
+      title: 'Búsqueda',
+      svg: '/assets/search.svg',
+      link: '/home',
+    },
+    {
+      title: 'Explorar',
+      svg: '/assets/explore.svg',
+      link: '/home',
+    },
+    {
+      title: 'Reels',
+      svg: '/assets/reel.svg',
+      link: '/home',
+    },
+    {
+      title: 'Mensajes',
+      svg: '/assets/mail.svg',
+      link: '/home',
+    },
+    {
+      title: 'Notificaciones',
+      svg: '/assets/notification.svg',
+      link: '/home',
+    },
+    {
+      title: 'Crear',
+      svg: '/assets/create.svg',
+      link: '/home',
+    },
+    {
+      title: 'Cuenta',
+      svg: '/assets/account.svg',
+      link: '/account',
+    },
+  ];
+
+
+  logOut(){
+    localStorage.removeItem('user');
+    window.location.reload();
+  }
+
+
+
+
 
 }

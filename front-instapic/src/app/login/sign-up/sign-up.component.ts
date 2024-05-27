@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { POST } from '../../../constants';
 
-import ContextService from '../../context/context.service';
+import ContextService from '../../services/context.service';
 
 @Component({
   selector: 'app-sign-up',

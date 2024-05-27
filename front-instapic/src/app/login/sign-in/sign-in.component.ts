@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { POST } from '../../../constants';
-import ContextService from '../../context/context.service';
+import ContextService from '../../services/context.service';
 
 @Component({
   selector: 'sign-in',
@@ -50,6 +50,8 @@ export class SignInComponent {
     });
 
     this.context.user = user;
+    
+    localStorage.setItem('user', user.id);
 
     this.route.navigate(['/home']);
   }
