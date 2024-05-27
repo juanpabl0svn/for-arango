@@ -3,6 +3,7 @@ import { MenuComponent } from '../../shared/menu/menu.component';
 import { RouterLink } from '@angular/router';
 import { UserPicsComponent } from '../user-pics/user-pics.component';
 import { ProfilePicturesService } from '../../services/profile-pictures.service';
+import ContextService from '../../services/context.service';
 
 @Component({
   selector: 'account',
@@ -12,7 +13,7 @@ import { ProfilePicturesService } from '../../services/profile-pictures.service'
   styleUrl: './account-page.component.css'
 })
 export class AccountPageComponent {
-  constructor(private profileService: ProfilePicturesService){}
+  constructor(private profileService: ProfilePicturesService, public context : ContextService){}
 
   publicationsNumber = this.profileService.publicationsCount()
 
