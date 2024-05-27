@@ -26,14 +26,12 @@ export class UserService {
     });
 
     return user;
-
-    // if (!this.bcryptService.compare(password, user.password)) {
-    //   throw new Error('Invalid password');
-    // }
   }
 
   create(createUserDto: CreateUserDto) {
-    return this.userRepository.create(createUserDto);
+    const newUser = this.userRepository.create(createUserDto);
+
+    return this.userRepository.save(newUser);
   }
 
   findAll() {

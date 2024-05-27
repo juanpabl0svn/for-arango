@@ -1,31 +1,33 @@
-import { IsNotEmpty, MinLength, MaxLength, IsEmail, IsDate } from 'class-validator';
+import {
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsEmail,
+  IsDate,
+  IsDateString,
+} from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Nickname is required' })
   nickname: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Name is required' })
   name: string;
 
-  @IsNotEmpty()
-  @MinLength(6)
-  lastname: string;
+  @IsNotEmpty({ message: 'Last name is required' })
+  @MinLength(6, { message: 'Last name must be at least 6 characters' })
+  last_name: string;
 
   @IsNotEmpty()
-  @MinLength(6)
-  @IsEmail()
+  @IsEmail({}, { message: 'Invalid email' })
   email: string;
 
-  @IsNotEmpty()
-  @MinLength(6)
-  birthday: string;
-
-  @IsNotEmpty()
-  @MinLength(6)
-  @MaxLength(50)
-  password: string;
-
-  @IsDate()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Birth date is required' })
+  @IsDateString({}, { message: 'Invalid date' })
   birth_date: string;
+
+  @IsNotEmpty({ message: 'Password is required' })
+  @MinLength(6, { message: 'Password must be at least 6 characters' })
+  @MaxLength(50, { message: 'Password must be at most 50 characters' })
+  password: string;
 }
