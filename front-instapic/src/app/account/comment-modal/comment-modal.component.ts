@@ -5,14 +5,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommentsService } from '../../services/comments.service';
 import { OnInit } from '@angular/core';
 
+import { IComment } from '../../interfaces/comment.interface';
+
 interface CommentModalData {
   pictureId: number;
-}
-
-interface Comment {
-  commentId: number;
-  comment: string;
-  publicationId: number;
 }
 
 @Component({
@@ -26,22 +22,24 @@ export class CommentModalComponent {
   constructor(
     public matDialogRef: MatDialogRef<CommentModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: CommentModalData,
-    private commentService: CommentsService){}
+    public commentService: CommentsService
+  ) {}
 
-  ngOnInit(): void {
-    this.commentsArray = this.commentService.getComments(this.data.pictureId)
-  }
   inputComment: string = '';
-  commentsArray: Comment[] = []
+
+  ngOnDestroy() {
+    this.commentService.comments = [];
+  }
+
   publishComment(comment: string) {
     if (this.inputComment === '') {
       return;
     }
+    console.log(this.data.pictureId);
     this.commentService.addNewComment(comment, this.data.pictureId);
-    this.commentsArray = this.commentService.getComments(this.data.pictureId);
     this.inputComment = '';
   }
-  deleteComment(cId: number,indice:number) {
-    this.commentService.deleteComment(cId,indice);
+  deleteComment(cId: number) {
+    this.commentService.deleteComment(cId);
   }
 }

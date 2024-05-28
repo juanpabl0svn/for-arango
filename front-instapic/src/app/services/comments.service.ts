@@ -1,51 +1,43 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Comment } from '../interfaces/comment.interface';
-
+import ContextService from './context.service';
+import { IComment } from '../interfaces/comment.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CommentsService {
+  comments: IComment[] = [];
 
-  
-  private commentsContainer: Comment[] = [];
-  constructor() {}
+  constructor(private context: ContextService) {}
 
-  getFromLS(){
-    const comments = localStorage.getItem('comments');
-    if (comments) {
-      return JSON.parse(comments);
-    } else {
-      return [];
-    }
-    
+  getComments(publicationId: number): IComment[] {
+    const publicationComments: IComment[] = [];
+    return (this.comments = publicationComments);
   }
-   
-  getComments(publicationId: number): Comment[] {
 
-    const comments:Comment[] = this.getFromLS()
-    const commentsPublication = comments.filter(c => c.publicationId === publicationId)
-    return commentsPublication
-  }
-  addNewComment(comment:string, publicationId:number) {
+  addNewComment(comment: string, publicationId: number) {
     const timestamp = Date.now();
-    this.commentsContainer = this.getFromLS()
-    let commentContainer = { comment: comment, commentId: timestamp, publicationId: publicationId };
+    const date = new Date(timestamp).toISOString().split('T')[0];
+    const { nickname, id_user } = this.context.user;
 
-    this.commentsContainer.push(commentContainer);
-
-    localStorage.setItem('comments', JSON.stringify(this.commentsContainer));
-    
+    let commentContainer = {
+      comment: comment,
+      commentId: crypto.randomUUID(),
+      publicationId: publicationId,
+      id_user,
+      nickname,
+      date,
+    };
+    this.comments.push(commentContainer as any);
+    return commentContainer;
   }
 
-  deleteComment(cId: number,indice: number) {
-    const comments:Comment[] = this.getFromLS(); 
-    const filteredComments = comments.filter(comment => comment.commentId !== cId);
+  deleteComment(cId: number) {
+    const filteredComments = this.comments.filter(
+      (comment: IComment) => comment.commentId !== cId
+    );
 
-    this.commentsContainer = filteredComments;
-    localStorage.setItem('comments', JSON.stringify(filteredComments));
-
+    return (this.comments = filteredComments);
   }
 }

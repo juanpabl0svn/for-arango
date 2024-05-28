@@ -4,18 +4,21 @@
       <h2>Comentarios</h2>
     </div>
     <div class="comment-container">
-      <div class="comment" *ngFor="let c of commentsArray;let indice = index">
-        <img src="../../../assets/account-images/emoji.svg" />
+      <div
+        class="comment"
+        *ngFor="let c of commentService.comments; let indice = index"
+      >
+        <img src="/assets/account-images/emoji.svg" />
         <div class="text-space">
           <label class="text">{{ c.comment }}</label>
         </div>
-        <button (click)="deleteComment(c.commentId,indice)">
-          <img src="../../../assets/account-images/trash.svg" alt="" />
+        <button (click)="deleteComment(c.commentId)">
+          <img src="/assets/account-images/trash.svg" alt="" />
         </button>
       </div>
     </div>
     <div class="input-container">
-      <img src="../../../assets/account-images/emoji.svg" />
+      <img src="/assets/account-images/emoji.svg" />
       <input
         type="text"
         placeholder="Añadir un comentario..."

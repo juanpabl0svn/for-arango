@@ -23,12 +23,19 @@ export class UserService {
   async auth(email: string, password: string) {
     const user = await this.userRepository.findOne({
       where: { email },
+    
     });
+
+
+    // if (this.bcryptService)
 
     return user;
   }
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
+
+    createUserDto.password = await this.bcryptService.hash(createUserDto.password)
+
     const newUser = this.userRepository.create(createUserDto);
 
     return this.userRepository.save(newUser);
@@ -38,8 +45,8 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+  findOne(id_user: number) {
+    return this.userRepository.findOne({ where: { id_user } });
   }
 
   findByUsername(nickname: string) {
@@ -52,7 +59,7 @@ export class UserService {
     return `This action updates a #${id} user`;
   }
 
-  validate(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+  validate(id_user: number) {
+    return this.userRepository.findOne({ where: { id_user } });
   }
 }
