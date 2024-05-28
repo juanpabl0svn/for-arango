@@ -30,6 +30,12 @@ export class UserController {
     return this.userService.findAll();
   }
 
+
+  @Post('users')
+  findUsers(@Body() body : {username: string}) {
+    return this.userService.findUsers(body.username);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);

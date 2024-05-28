@@ -23,9 +23,7 @@ export class UserService {
   async auth(email: string, password: string) {
     const user = await this.userRepository.findOne({
       where: { email },
-    
     });
-
 
     // if (this.bcryptService)
 
@@ -33,8 +31,9 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto) {
-
-    createUserDto.password = await this.bcryptService.hash(createUserDto.password)
+    createUserDto.password = await this.bcryptService.hash(
+      createUserDto.password,
+    );
 
     const newUser = this.userRepository.create(createUserDto);
 
@@ -52,6 +51,12 @@ export class UserService {
   findByUsername(nickname: string) {
     return this.userRepository.findOne({
       where: { nickname: ILike(`%${nickname}%`) },
+    });
+  }
+
+  async findUsers(username: string) {
+    return this.userRepository.find({
+      where: { nickname: ILike(`%${username}%`) },
     });
   }
 
