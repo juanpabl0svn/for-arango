@@ -10,4 +10,6 @@ export const POST = (url: string, data: any) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .catch(() => null);

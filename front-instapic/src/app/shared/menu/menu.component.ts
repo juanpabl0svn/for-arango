@@ -20,7 +20,7 @@ export class MenuComponent {
     {
       title: 'Búsqueda',
       svg: '/assets/search.svg',
-      link: '/home',
+      link: '/search',
     },
     {
       title: 'Explorar',

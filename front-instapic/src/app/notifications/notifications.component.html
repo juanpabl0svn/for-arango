@@ -4,5 +4,25 @@
   </div>
   <div id="feed"></div>
 
-  <div id="new-post-container"></div>
+  <div id="new-post-container">
+    <div class="requests-container">
+      <h2>Solicitudes de Amistad</h2>
+      <ul class="request-list">
+        @for (request of friendRequests; track $index) {
+
+        <li class="request-item">
+          <span>{{ request.name }}</span>
+          <div class="actions">
+            <button (click)="acceptRequest(request)" class="accept-btn">
+              Aceptar
+            </button>
+            <button (click)="rejectRequest(request)" class="reject-btn">
+              Rechazar
+            </button>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
 </div>

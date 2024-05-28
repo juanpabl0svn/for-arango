@@ -49,9 +49,11 @@ export class SignInComponent {
       password: this.userData.password,
     });
 
+    console.log(user)
+
     this.context.user = user;
     
-    localStorage.setItem('user', user.id);
+    localStorage.setItem('user', user.token);
 
     this.route.navigate(['/home']);
   }

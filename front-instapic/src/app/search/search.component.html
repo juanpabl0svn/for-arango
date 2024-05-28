@@ -1,0 +1,29 @@
+<div class="home-container">
+  <div id="menu">
+    <menu></menu>
+  </div>
+  <div id="feed"></div>
+
+  <div id="account-info">
+    <div class="search-container">
+      <input
+        type="text"
+        (ngModel)="(searchQuery)"
+        placeholder="Buscar usuarios..."
+        class="search-input"
+        (input)="search($event)"
+      />
+      <ul class="user-list">
+        @for (user of users; track $index) {
+
+        <li class="user-item">
+          <span>{{ user.name }}</span>
+          <button (click)="toggleFollow(user)" class="follow-btn">
+            {{ user.following ? "Dejar de seguir" : "Seguir" }}
+          </button>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

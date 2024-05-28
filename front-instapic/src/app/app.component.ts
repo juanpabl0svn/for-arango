@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MenuComponent } from './shared/menu/menu.component';
-import { LowerCasePipe } from '@angular/common';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',

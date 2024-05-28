@@ -7,6 +7,7 @@ import { loggedInGuard } from './guards/logged-in.guard';
 import { loggedOutGuard } from './guards/logged-out.guard';
 import { NewPostComponent } from './new-post/new-post.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { SearchComponent } from './search/search.component';
 
 export const routes: Routes = [
   { path: '', component: SignInComponent, canActivate: [loggedOutGuard] },
@@ -28,6 +29,10 @@ export const routes: Routes = [
   {
     path: 'notifications',
     component: NotificationsComponent,
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

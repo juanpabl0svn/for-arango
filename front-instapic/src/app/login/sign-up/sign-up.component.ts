@@ -11,6 +11,7 @@ import {
 import { POST } from '../../../constants';
 
 import ContextService from '../../services/context.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +31,7 @@ export class SignUpComponent {
     confirmPassword: new FormControl('', Validators.required),
   });
 
-  constructor(private context: ContextService) {}
+  constructor(private context: ContextService, private router: Router) {}
 
   passwordMatchValidator(password: string, confirmPassword: string) {
     const passwordControl = password;
@@ -119,7 +120,7 @@ export class SignUpComponent {
       form: 'confirmPassword',
     },
   ];
-  onRegister() {
+  async onRegister() {
     const {
       nickname,
       name,
@@ -157,7 +158,7 @@ export class SignUpComponent {
 
     // console.log(ala)
 
-    const user = POST('/user/create', {
+    const user = await POST('/user/create', {
       nickname,
       name,
       last_name,
@@ -165,6 +166,12 @@ export class SignUpComponent {
       birth_date,
       password,
     });
+
+    this.context.user = user;
+
+    localStorage.setItem('user', user.token);
+
+    this.router.navigate(['/home']);
 
     console.log(user);
   }
