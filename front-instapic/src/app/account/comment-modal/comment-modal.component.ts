@@ -27,12 +27,16 @@ export class CommentModalComponent {
 
   inputComment: string = '';
 
+  ngOnInit() {
+    this.commentService.getComments(this.data.pictureId);
+  }
+
   ngOnDestroy() {
     this.commentService.comments = [];
   }
 
   publishComment(comment: string) {
-    if (this.inputComment === '') {
+    if (this.inputComment.trim() === '') {
       return;
     }
     console.log(this.data.pictureId);

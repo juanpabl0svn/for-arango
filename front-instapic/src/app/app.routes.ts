@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { SignInComponent } from './login/sign-in/sign-in.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
-import { HomePageComponent } from './home/pages/home-page/home-page.component';
+import { HomePageComponent } from './home/home-page/home-page.component';
 import { AccountPageComponent } from './account/account-page/account-page.component';
 import { loggedInGuard } from './guards/logged-in.guard';
 import { loggedOutGuard } from './guards/logged-out.guard';
+import { NewPostComponent } from './new-post/new-post.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 export const routes: Routes = [
   { path: '', component: SignInComponent, canActivate: [loggedOutGuard] },
@@ -18,6 +20,14 @@ export const routes: Routes = [
     path: 'account',
     component: AccountPageComponent,
     canActivate: [loggedInGuard],
+  },
+  {
+    path: 'new_post',
+    component: NewPostComponent,
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

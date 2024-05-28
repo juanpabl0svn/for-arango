@@ -40,12 +40,12 @@ export class MenuComponent {
     {
       title: 'Notificaciones',
       svg: '/assets/notification.svg',
-      link: '/home',
+      link: '/notifications',
     },
     {
       title: 'Crear',
       svg: '/assets/create.svg',
-      link: '/home',
+      link: '/new_post',
     },
     {
       title: 'Cuenta',
@@ -54,14 +54,8 @@ export class MenuComponent {
     },
   ];
 
-
-  logOut(){
+  logOut() {
     localStorage.removeItem('user');
     window.location.reload();
   }
-
-
-
-
-
 }

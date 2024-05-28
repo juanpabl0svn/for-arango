@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MenuComponent } from '../../../shared/menu/menu.component';
+import { MenuComponent } from '../../shared/menu/menu.component';
 import { CommonModule } from '@angular/common';
-import { AccountInfoComponent } from '../../components/account-info/account-info.component';
+import { AccountInfoComponent } from '../account-info/account-info.component';
 
 @Component({
   selector: 'app-home-page',

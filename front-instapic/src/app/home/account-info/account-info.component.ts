@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import ContextService from '../../../services/context.service';
+import ContextService from '../../services/context.service';
 
 @Component({
   selector: 'account-info',
