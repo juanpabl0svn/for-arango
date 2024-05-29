@@ -11,11 +11,7 @@ import { POST } from '../../constants';
 })
 export class SearchComponent {
   searchQuery: string = '';
-  users = [
-    { id: 1, name: 'John Doe', following: false },
-    { id: 2, name: 'Jane Smith', following: false },
-    { id: 3, name: 'Alice Johnson', following: false },
-  ];
+  users: any[] = [];
 
   async search(e: Event) {
     const username = (e.target as HTMLInputElement).value;

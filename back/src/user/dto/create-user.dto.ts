@@ -15,7 +15,6 @@ export class CreateUserDto {
   name: string;
 
   @IsNotEmpty({ message: 'Last name is required' })
-  @MinLength(6, { message: 'Last name must be at least 6 characters' })
   last_name: string;
 
   @IsNotEmpty()

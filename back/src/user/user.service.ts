@@ -1,15 +1,16 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
-import { User } from '../entities/user.entity';
+import { User } from './entities/user.entity';
 
 import { Repository, ILike } from 'typeorm';
 
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
+import { SECRET } from 'src/config';
 
 @Injectable()
 export class UserService {
@@ -25,9 +26,11 @@ export class UserService {
       where: { email },
     });
 
-    // if (this.bcryptService)
+    const token = this.jwtService.sign(user.id_user.toString());
 
-    return user;
+    console.log(token);
+
+    return { token, ...user };
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -37,7 +40,11 @@ export class UserService {
 
     const newUser = this.userRepository.create(createUserDto);
 
-    return this.userRepository.save(newUser);
+    const userCreated = await this.userRepository.save(newUser);
+
+    const token = this.jwtService.sign(userCreated.id_user.toString());
+
+    return { token, ...newUser };
   }
 
   findAll() {
@@ -64,7 +71,14 @@ export class UserService {
     return `This action updates a #${id} user`;
   }
 
-  validate(id_user: number) {
+  validate(token: string) {
+    console.log(token);
+    const id_user = this.jwtService.verify(token);
+
+    if (!id_user) {
+      throw new NotFoundException('Token inválido');
+    }
+
     return this.userRepository.findOne({ where: { id_user } });
   }
 }

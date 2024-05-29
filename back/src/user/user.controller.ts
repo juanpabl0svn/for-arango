@@ -22,7 +22,13 @@ export class UserController {
 
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
+    console.log('entra')
     return this.userService.create(createUserDto);
+  }
+
+  @Post('validate')
+  validate(@Body() body: { token: string }) {
+    return this.userService.validate(body.token);
   }
 
   @Get()
@@ -30,9 +36,8 @@ export class UserController {
     return this.userService.findAll();
   }
 
-
   @Post('users')
-  findUsers(@Body() body : {username: string}) {
+  findUsers(@Body() body: { username: string }) {
     return this.userService.findUsers(body.username);
   }
 
@@ -44,10 +49,5 @@ export class UserController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
-  }
-
-  @Post('validate')
-  validate(@Body() body: { id: number }) {
-    return this.userService.validate(+body.id);
   }
 }
