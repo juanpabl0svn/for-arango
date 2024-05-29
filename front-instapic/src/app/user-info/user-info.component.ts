@@ -32,9 +32,22 @@ export class UserInfoComponent {
         return this.router.navigate(['/']);
       }
 
-      console.log(userData)
-
       return (this.currentUser = userData);
     });
   }
+
+  async follow() {
+    const isFollowing = await POST('/follow', {
+      id_user_follower: this.context.user?.id_user,
+      id_user: this.currentUser.id_user,
+    });
+
+    if (!isFollowing) {
+      return alert('No se pudo seguir a esta persona');
+    }
+
+    this.currentUser.state = 'pending';
+  }
+
+  // unfollow() {}
 }

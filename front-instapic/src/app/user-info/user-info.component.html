@@ -26,9 +26,12 @@
     </div>
     <button>
       @if(currentUser.state === 'accepted'){
-      <button>Dejar de seguir</button>
-      }@else if (currentUser.state === 'pending'){ }@else {
-      <button>Seguir</button>
+      <button (click)="unfollow()">Dejar de seguir</button>
+      }@else if (currentUser.state === 'pending'){
+      <span>Pendiente</span>
+
+      }@else {
+      <button (click)="follow()">Seguir</button>
       }
     </button>
   </div>

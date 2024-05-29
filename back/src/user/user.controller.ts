@@ -22,7 +22,7 @@ export class UserController {
 
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
-    console.log('entra')
+    console.log('entra');
     return this.userService.create(createUserDto);
   }
 
@@ -31,19 +31,19 @@ export class UserController {
     return this.userService.validate(body.token);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
   @Post('users')
   findUsers(@Body() body: { username: string }) {
     return this.userService.findUsers(body.username);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get('nickname/:nickname')
+  findOne(@Param('nickname') nickname: string) {
+    return this.userService.getUserInfo(nickname);
+  }
+
+  @Post('search')
+  searchUser(@Body() body: { nickname: string; id_user: number }) {
+    return this.userService.searchUser(body.nickname, +body.id_user);
   }
 
   @Patch(':id')

@@ -1,7 +1,7 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
@@ -11,6 +11,8 @@ import { Repository, ILike } from 'typeorm';
 
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
 import { SECRET } from 'src/config';
+import { Follow } from 'src/follow/entities/follow.entity';
+import { Post as PostEntity } from 'src/post/entities/post.entity';
 
 @Injectable()
 export class UserService {
@@ -19,16 +21,24 @@ export class UserService {
     private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Follow)
+    private readonly followRepository: Repository<Follow>,
+    @InjectRepository(PostEntity)
+    private readonly postRepository: Repository<PostEntity>,
   ) {}
 
   async auth(email: string, password: string) {
-    const user = await this.userRepository.findOne({
+    const userData = await this.userRepository.findOne({
       where: { email },
     });
 
-    const token = this.jwtService.sign(user.id_user.toString());
+    if (!userData) {
+      throw new NotFoundException('User not found');
+    }
 
-    console.log(token);
+    const token = this.jwtService.sign(userData.id_user.toString());
+
+    const user = await this.getUserInfo(userData.nickname);
 
     return { token, ...user };
   }
@@ -44,21 +54,38 @@ export class UserService {
 
     const token = this.jwtService.sign(userCreated.id_user.toString());
 
-    return { token, ...newUser };
+    return { token, ...userCreated };
   }
 
-  findAll() {
-    return this.userRepository.find();
-  }
+  async getUserInfo(nickname: string) {
+    const user = await this.userRepository.findOne({ where: { nickname } });
 
-  findOne(id_user: number) {
-    return this.userRepository.findOne({ where: { id_user } });
-  }
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-  findByUsername(nickname: string) {
-    return this.userRepository.findOne({
-      where: { nickname: ILike(`%${nickname}%`) },
-    });
+    const followersCount = await this.followRepository
+      .createQueryBuilder('follow')
+      .where('follow.id_user = :id_user', { id_user: user.id_user })
+      .andWhere('follow.state = :state', { state: 'accepted' })
+      .getCount();
+
+    const posts = await this.postRepository
+      .createQueryBuilder('post')
+      .where('post.id_user = :id_user', { id_user: user.id_user })
+      .getMany();
+
+    const pendingFollowsCount = await this.followRepository
+      .createQueryBuilder('follow')
+      .where('follow.id_user = :id_user', { id_user: user.id_user })
+      .andWhere('follow.state = :state', { state: 'pending' })
+      .getCount();
+
+    return {
+      followersCount,
+      posts,
+      pendingFollowsCount,
+    };
   }
 
   async findUsers(username: string) {
@@ -67,18 +94,50 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async searchUser(nickname: string, id_user: number) {
+    const data = await this.getUserInfo(nickname);
+
+    const user = await this.userRepository.findOne({ where: { nickname } });
+
+    const isFollowing = await this.followRepository.findOne({
+      where: {
+        id_user,
+        id_user_follower: user.id_user,
+      },
+    });
+    return { ...data, ...user, state: isFollowing?.state || null };
   }
 
-  validate(token: string) {
-    console.log(token);
+  async validate(token: string) {
     const id_user = this.jwtService.verify(token);
 
     if (!id_user) {
       throw new NotFoundException('Token inválido');
     }
 
+    const user = await this.userRepository.findOne({
+      where: { id_user },
+    });
+
+    return { ...user, token };
+  }
+
+  async update(id_user: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({ where: { id_user } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    await this.userRepository.update(id_user, updateUserDto);
+
     return this.userRepository.findOne({ where: { id_user } });
+  }
+
+  async isFollowing(id_user: number, id_user_follower: number) {
+    const follow = await this.followRepository.findOne({
+      where: { id_user, id_user_follower },
+    });
+    return follow ? true : false;
   }
 }

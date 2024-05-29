@@ -17,6 +17,7 @@ export class NotificationsComponent {
 
   async ngOnInit() {
     this.friendRequests = await GET(`/follow/${this.context.user?.id_user}`);
+    console.log(this.friendRequests)
   }
 
   async acceptRequest(id_follow: number) {

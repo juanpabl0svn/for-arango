@@ -13,10 +13,16 @@
         <li class="request-item">
           <span>{{ request.nickname }}</span>
           <div class="actions">
-            <button (click)="acceptRequest(request)" class="accept-btn">
+            <button
+              (click)="acceptRequest(request.id_follow)"
+              class="accept-btn"
+            >
               Aceptar
             </button>
-            <button (click)="rejectRequest(request)" class="reject-btn">
+            <button
+              (click)="rejectRequest(request.id_follow)"
+              class="reject-btn"
+            >
               Rechazar
             </button>
           </div>

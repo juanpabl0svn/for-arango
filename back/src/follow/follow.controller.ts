@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FollowService } from './follow.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
@@ -12,14 +20,19 @@ export class FollowController {
     return this.followService.create(createFollowDto);
   }
 
-  @Get()
-  findAll() {
-    return this.followService.findAll();
+  @Get(':id')
+  findUserFollows(@Param('id') id_user: string) {
+    return this.followService.findUserFollows(+id_user);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.followService.findOne(+id);
+  @Post('accept')
+  acceptFollow(@Body() body: { id_follow: number }) {
+    return this.followService.acceptFollow(body.id_follow);
+  }
+
+  @Post('reject')
+  rejectFollow(@Body() body: { id_follow: number }) {
+    return this.followService.rejectFollow(body.id_follow);
   }
 
   @Patch(':id')
