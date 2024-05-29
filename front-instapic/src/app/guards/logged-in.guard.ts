@@ -9,7 +9,7 @@ export const loggedInGuard: CanActivateFn = async (route, state) => {
 
 
 
-  if (contextService.user?.name) {
+  if (contextService.user?.nickname) {
     return true;
   }
 

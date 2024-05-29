@@ -43,7 +43,7 @@ export class NewPostComponent {
     const post = {
       description: description.value,
       image: ruta,
-      id_user: this.context.user.id_user,
+      id_user: this.context.user?.id_user,
     };
 
     const newPost = await POST('/post', post);

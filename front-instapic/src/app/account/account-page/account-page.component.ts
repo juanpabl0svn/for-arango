@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { RouterLink } from '@angular/router';
 import { UserPicsComponent } from '../user-pics/user-pics.component';
-import { ProfilePicturesService } from '../../services/profile-pictures.service';
 import ContextService from '../../services/context.service';
-import { GET, POST } from '../../../constants';
+import { GET } from '../../../constants';
 
 @Component({
   selector: 'account',
@@ -19,14 +18,11 @@ export class AccountPageComponent {
   followersCount: number = 0;
   posts: any[] = [];
 
-  constructor(
-    private profileService: ProfilePicturesService,
-    public context: ContextService
-  ) {}
+  constructor(public context: ContextService) {}
 
   async ngOnInit() {
     const profileData = await GET(
-      `/user/nickname/${this.context.user.nickname}`
+      `/user/nickname/${this.context.user?.nickname}`
     );
 
     if (!profileData) {
