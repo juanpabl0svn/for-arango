@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MenuComponent } from '../shared/menu/menu.component';
 import { POST } from '../../constants';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [MenuComponent],
+  imports: [MenuComponent, RouterLink],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })

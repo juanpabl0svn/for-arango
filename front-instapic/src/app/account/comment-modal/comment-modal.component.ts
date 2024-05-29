@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CommentsService } from '../../services/comments.service';
 import { OnInit } from '@angular/core';
 
 import { IComment } from '../../interfaces/comment.interface';
+import { GET, POST } from '../../../constants';
+import ContextService from '../../services/context.service';
 
 interface CommentModalData {
-  pictureId: number;
+  id_post: number;
 }
 
 @Component({
@@ -22,28 +23,43 @@ export class CommentModalComponent {
   constructor(
     public matDialogRef: MatDialogRef<CommentModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: CommentModalData,
-    public commentService: CommentsService
+    public context: ContextService
   ) {}
+
+  comments: any[] = [];
 
   inputComment: string = '';
 
-  ngOnInit() {
-    this.commentService.getComments(this.data.pictureId);
+  async ngOnInit() {
+    this.comments = await GET(`/comment/${this.data.id_post}`);
+    console.log(this.comments);
   }
 
-  ngOnDestroy() {
-    this.commentService.comments = [];
-  }
-
-  publishComment(comment: string) {
+  async publishComment(comment: string) {
     if (this.inputComment.trim() === '') {
       return;
     }
-    console.log(this.data.pictureId);
-    this.commentService.addNewComment(comment, this.data.pictureId);
+
+    const commentData = {
+      comment,
+      id_post: this.data.id_post,
+      id_user: this.context.user.id_user,
+      nickname: this.context.user.nickname,
+    };
+
+    console.log(commentData);
+
+    const newComment = await POST('/comment', commentData);
+
+    if (!newComment)
+      return alert(
+        'No se pudo publicar el comentario, no sigues a esta persona'
+      );
+
+    console.log(newComment);
+
+    this.comments.push(newComment);
+
     this.inputComment = '';
-  }
-  deleteComment(cId: number) {
-    this.commentService.deleteComment(cId);
   }
 }

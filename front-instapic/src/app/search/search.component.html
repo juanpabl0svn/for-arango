@@ -17,7 +17,9 @@
         @for (user of users; track $index) {
 
         <li class="user-item">
-          <span>{{ user.name }}</span>
+          <span routerLink="/nickname/{{ user.nickname ?? 1 }}">{{
+            user.name
+          }}</span>
           <button (click)="toggleFollow(user)" class="follow-btn">
             {{ user.following ? "Dejar de seguir" : "Seguir" }}
           </button>

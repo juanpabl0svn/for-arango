@@ -7,14 +7,14 @@
   <div id="new-post-container">
     <div class="post-create-container">
       <h2>Crear Publicación</h2>
-      <form (submit)="onPost()">
+      <form (submit)="onPost($event)">
         <div class="form-group">
           <input
             type="text"
-            (ngModel)="(caption)"
-            name="caption"
+            name="description"
             placeholder="Escribe un texto..."
             class="form-control"
+            required
           />
         </div>
         <div class="form-group">
@@ -22,7 +22,9 @@
             type="file"
             (change)="onImagePicked($event)"
             accept="image/*"
+            files="jpg,png,jpeg"
             class="form-control"
+            required
           />
         </div>
         @if (imagePreview) {

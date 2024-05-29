@@ -1,0 +1,34 @@
+.home-container {
+  background: rgb(201, 198, 198);
+  display: flex;
+}
+#menu {
+  height: 100vh;
+  width: 20%;
+  /*background: aqua;*/
+
+  /*border-right: 0.1px solid rgb(187, 187, 187);*/
+  position: relative;
+}
+#feed {
+  height: 100vh;
+  width: 60%;
+
+  border-right: 0.1px solid rgb(187, 187, 187);
+  filter: drop-shadow(5px 0px 2px rgba(222, 220, 220, 0.5));
+}
+#account-info {
+  height: 100vh;
+  width: 20%;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-image {
+  height: 3em;
+  mix-blend-mode: multiply;
+}

@@ -1,13 +1,16 @@
 <div class="user-pics">
-  <div class="pic-container" *ngFor="let item of userPictures">
-    <img class="pic" [src]="item.img" alt="" />
+  <div class="pic-container" *ngFor="let item of posts">
+    <img class="pic" [src]="item.image" alt="" />
     <div class="pic-options">
       <button class="pic-option">
         <img src="../../../assets/account-images/like.svg" />
       </button>
-      <button class="pic-option" (click)="openModal(item.id)">
+      <button class="pic-option" (click)="openModal(item.id_post)">
         <img src="../../../assets/account-images/comment.svg" />
       </button>
+      <span>
+        {{ item.description }}
+      </span>
     </div>
   </div>
 </div>
