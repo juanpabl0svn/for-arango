@@ -12,11 +12,24 @@
         <h5 id="name">{{ currentUser?.name }} {{ currentUser?.last_name }}</h5>
       </div>
       <p class="info-p">
-        <span class="info_account">{{ currentUser?.publicationsNumber }}</span>
+        <span class="info_account">{{ currentUser?.posts?.length }}</span>
         publicaciones
       </p>
-      <p class="info-p"><span class="info_account">700</span> seguidores</p>
-      <p class="info-p"><span class="info_account">401</span> seguidos</p>
+      <p class="info-p">
+        <span class="info_account">{{ currentUser.followersCount }}</span>
+        seguidores
+      </p>
+      <p class="info-p">
+        <span class="info_account">{{ currentUser.pendingFollowsCount }}</span>
+        seguidos
+      </p>
     </div>
+    <button>
+      @if(currentUser.state === 'accepted'){
+      <button>Dejar de seguir</button>
+      }@else if (currentUser.state === 'pending'){ }@else {
+      <button>Seguir</button>
+      }
+    </button>
   </div>
 </div>

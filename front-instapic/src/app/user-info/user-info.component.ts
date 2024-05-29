@@ -23,11 +23,16 @@ export class UserInfoComponent {
 
   ngOnInit() {
     this.route.params.subscribe(async (param) => {
-      const userData = await GET(`/user/nickname/${param['nickname']}`);
+      const userData = await POST(`/user/search`, {
+        nickname: param['nickname'],
+        id_user: this.context.user?.id_user,
+      });
 
       if (!userData) {
         return this.router.navigate(['/']);
       }
+
+      console.log(userData)
 
       return (this.currentUser = userData);
     });
