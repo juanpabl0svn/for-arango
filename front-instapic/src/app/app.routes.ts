@@ -9,6 +9,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { SearchComponent } from './search/search.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { EditComponent } from './edit/edit.component';
 
 export const routes: Routes = [
   { path: '', component: SignInComponent, canActivate: [loggedOutGuard] },
@@ -41,6 +42,11 @@ export const routes: Routes = [
   {
     path: 'nickname/:nickname',
     component: UserInfoComponent,
+    canActivate: [loggedInGuard],
+  },
+  {
+    path: 'edit',
+    component: EditComponent,
     canActivate: [loggedInGuard],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

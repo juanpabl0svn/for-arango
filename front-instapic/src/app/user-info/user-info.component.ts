@@ -5,10 +5,12 @@ import ContextService from '../services/context.service';
 
 import { MenuComponent } from '../shared/menu/menu.component';
 
+import { UserPicsComponent } from '../account/user-pics/user-pics.component';
+
 @Component({
   selector: 'app-user-info',
   standalone: true,
-  imports: [MenuComponent],
+  imports: [MenuComponent, UserPicsComponent],
   templateUrl: './user-info.component.html',
   styleUrl: './user-info.component.css',
 })

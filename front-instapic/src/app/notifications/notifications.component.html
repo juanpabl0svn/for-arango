@@ -13,6 +13,8 @@
         <li class="request-item">
           <span>{{ request.nickname }}</span>
           <div class="actions">
+            @if (request.state === 'pending') {
+
             <button
               (click)="acceptRequest(request.id_follow)"
               class="accept-btn"
@@ -25,6 +27,11 @@
             >
               Rechazar
             </button>
+            }@else if (request.state === 'accepted') {
+            <span>Aceptado</span>
+            }@else {
+            <span>Rechazado</span>
+            }
           </div>
         </li>
         }

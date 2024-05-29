@@ -23,9 +23,9 @@ export class MenuComponent {
       link: '/search',
     },
     {
-      title: 'Explorar',
+      title: 'editar',
       svg: '/assets/explore.svg',
-      link: '/home',
+      link: '/edit',
     },
     {
       title: 'Reels',

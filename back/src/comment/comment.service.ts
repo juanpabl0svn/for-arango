@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { User } from 'src/user/entities/user.entity';
@@ -24,6 +24,8 @@ export class CommentService {
   ) {}
 
   async create(createCommentDto: CreateCommentDto) {
+    console.log(createCommentDto);
+
     const post = await this.postRepository.findOne({
       where: { id_post: createCommentDto.id_post },
     });
@@ -31,15 +33,17 @@ export class CommentService {
     const follow = await this.followRepository
       .createQueryBuilder('follow')
       .where('follow.id_user = :id_user', { id_user: post.id_user })
-      .andWhere('follow.id_user_follower = :id_user_follower', {
-        id_user_follower: createCommentDto.id_user,
+      .andWhere('follow.id_user = :id_user', {
+        id_user: createCommentDto.id_user,
       })
       .andWhere('follow.state = :state', { state: 'accepted' })
       .getOne();
 
     //Si no hay follow pero si es el mismo usuario
     if (!follow && createCommentDto.id_user !== post.id_user)
-      throw new Error('You are not allowed to comment this post');
+      throw new UnauthorizedException(
+        'You are not allowed to comment this post',
+      );
 
     const newComment = this.commentRepository.create(createCommentDto);
 
