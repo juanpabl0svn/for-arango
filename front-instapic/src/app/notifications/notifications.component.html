@@ -11,7 +11,7 @@
         @for (request of friendRequests; track $index) {
 
         <li class="request-item">
-          <span>{{ request.name }}</span>
+          <span>{{ request.nickname }}</span>
           <div class="actions">
             <button (click)="acceptRequest(request)" class="accept-btn">
               Aceptar

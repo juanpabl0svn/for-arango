@@ -1,31 +1,45 @@
 import { Component } from '@angular/core';
 import { MenuComponent } from '../shared/menu/menu.component';
-
+import { GET, POST } from '../../constants';
+import ContextService from '../services/context.service';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
   imports: [MenuComponent],
   templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  styleUrl: './notifications.component.css',
 })
 export class NotificationsComponent {
-  friendRequests = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    { id: 3, name: 'Alice Johnson' }
-  ];
+  constructor(private context: ContextService) {}
 
-  acceptRequest(request: any) {
-    // Implementar la lógica para aceptar la solicitud
-    console.log(`Solicitud de amistad aceptada: ${request.name}`);
-    this.friendRequests = this.friendRequests.filter(r => r.id !== request.id);
+  friendRequests: any[] = [];
+
+  async ngOnInit() {
+    this.friendRequests = await GET(`/follow/${this.context.user?.id_user}`);
   }
 
-  rejectRequest(request: any) {
-    // Implementar la lógica para rechazar la solicitud
-    console.log(`Solicitud de amistad rechazada: ${request.name}`);
-    this.friendRequests = this.friendRequests.filter(r => r.id !== request.id);
+  async acceptRequest(id_follow: number) {
+    await POST('/follow/accept', {
+      id_follow,
+    });
+
+    const index = this.friendRequests.findIndex(
+      (r) => r.id_follow === id_follow
+    );
+
+    this.friendRequests[index].state = 'ACCEPTED';
   }
 
+  async rejectRequest(id_follow: number) {
+    await POST('/follow/reject', {
+      id_follow,
+    });
+
+    const index = this.friendRequests.findIndex(
+      (r) => r.id_follow === id_follow
+    );
+
+    this.friendRequests[index].state = 'REJECTED';
+  }
 }

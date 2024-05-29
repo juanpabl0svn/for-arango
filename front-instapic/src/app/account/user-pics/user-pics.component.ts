@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ProfilePicturesService } from '../../services/profile-pictures.service';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';

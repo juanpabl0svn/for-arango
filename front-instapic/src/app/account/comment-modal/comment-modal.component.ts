@@ -43,8 +43,8 @@ export class CommentModalComponent {
     const commentData = {
       comment,
       id_post: this.data.id_post,
-      id_user: this.context.user.id_user,
-      nickname: this.context.user.nickname,
+      id_user: this.context.user?.id_user,
+      nickname: this.context.user?.nickname,
     };
 
     console.log(commentData);
